@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Mtani</title>
+    <link rel="stylesheet" href="product-details.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Header Section -->
+<header class="header">
+    <div class="container">
+        <h1>Mtani Bespoke</h1>
+    </div>
+</header>
+
+<!-- Navigation Section -->
+<nav class="navigation">
+    <div class="container">
+        <ul>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="cart.html">Cart</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Product Details Section -->
+<section class="product-details container">
+    <div class="product-info">
+        <input type="hidden" id="product-id" value=""> <!-- Hidden input for product ID -->
+        <img id="product-image" class="product-image" src="" alt="Product Image">
+        <div class="product-description">
+            <h2 id="product-name"></h2>
+            <p id="product-description"></p>
+            <p class="product-price" id="product-price"></p>
+        </div>
+    </div>
+    
+    <!-- Order Form -->
+    <div class="order-form">
+        <h3>Place Your Order</h3>
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" min="1" value="1">
+        <p class="total-cost" id="total-price">Total: $<span id="total-price-value">0.00</span></p>
+        <button id="add-to-cart-button">Add to Cart</button>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-logo">
+            <img src="/Projects/Images/logo.jpg" alt="Logo">
+        </div>
+        <div class="footer-navigation">
+            <ul>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+            </ul>
+        </div>
+        <p>&copy; 2024 Mtani Bespoke. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    // Get query parameters from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+    const productName = urlParams.get('name');
+    const productPrice = urlParams.get('price');
+    const productImage = urlParams.get('image');
+    const productDescription = urlParams.get('description');
+
+    // Populate product details
+    document.getElementById('product-name').innerText = decodeURIComponent(productName);
+    document.getElementById('product-price').innerText = `$${parseFloat(productPrice).toFixed(2)}`;
+    document.getElementById('product-image').src = decodeURIComponent(productImage);
+    document.getElementById('product-description').innerText = decodeURIComponent(productDescription);
+
+    // Compute total price based on quantity
+    const quantityInput = document.getElementById('quantity');
+    const totalPriceValue = document.getElementById('total-price-value');
+
+    function calculateTotalCost() {
+        const quantity = quantityInput.value;
+        const totalCost = (parseFloat(productPrice) * quantity).toFixed(2);
+        totalPriceValue.innerText = totalCost;
+    }
+
+    // Calculate total cost when quantity changes
+    quantityInput.addEventListener('input', calculateTotalCost);
+
+    // Initialize total price on page load
+    calculateTotalCost();
+
+    // Add to Cart Button Click Event
+    document.getElementById('add-to-cart-button').onclick = function() {
+        const quantity = quantityInput.value;
+
+        if (quantity < 1) {
+            alert('Please select a valid quantity.');
+            return;
+        }
+
+        const product = {
+            id: productId,
+            name: productName,
+            price: parseFloat(productPrice),
+            image: productImage,
+            description: productDescription,
+            quantity: quantity
+        };
+        addToCart(product);
+    };
+
+    // Function to add product to cart
+    function addToCart(product) {
+        // Check if the user is logged in using session storage
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+
+        if (!isLoggedIn) {
+            window.location.href = 'login.html';  // Redirect to login if not logged in
+        } else {
+            // Make a POST request to save the cart data
+            fetch('save-cart.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(product)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(text); // Get the error message from the response
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.href = 'cart.html';
+                } else {
+                    alert('Failed to add product to cart: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while adding the product to the cart: ' + error.message);
+            });
+        }
+    }
+</script>
+
+</body>
+</html>

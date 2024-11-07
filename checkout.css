@@ -1,0 +1,118 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.header {
+    background-color: #ff6f61;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.header .logo {
+    max-width: 150px;
+}
+
+.checkout {
+    padding: 40px 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.checkout-header h1 {
+    color: #333;
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.checkout-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.checkout-table thead {
+    background-color: #ff6f61;
+    color: white;
+}
+
+.checkout-table th, .checkout-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.checkout-table img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.checkout-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.checkout-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.checkout-total {
+    text-align: right;
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+
+.checkout-total span {
+    font-weight: bold;
+}
+
+.complete-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.complete-button:hover {
+    background-color: #218838;
+}
+
+@media (max-width: 600px) {
+    .checkout {
+        padding: 20px;
+    }
+
+    .complete-button {
+        width: 100%;
+    }
+}
+.navigation-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.navigation-buttons button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1em;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.navigation-buttons button:hover {
+    background-color: #0056b3;
+}
+

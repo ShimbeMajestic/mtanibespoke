@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Global Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        /* Container for the form */
+        .login-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        /* Title Styling */
+        .login-form h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        /* Input fields styling */
+        .login-form input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            background-color: #f9f9f9;
+        }
+        /* Button Styling */
+        .login-form button {
+            width: 100%;
+            padding: 15px;
+            background-color: #2c3e50;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .login-form button:hover {
+            background-color: #1a242f;
+        }
+        /* Error message styling */
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        /* Additional link for register or password reset */
+        .extra-info {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .extra-info a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .extra-info a:hover {
+            color: #1a242f;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-form">
+        <h2>Welcome Back!</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="password" id="password" placeholder="Enter your password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p class="error-message" id="error-message"></p>
+        <p class="extra-info">Don't have an account? <a href="registration.html">Register here</a></p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the default way
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Prepare data for login request
+            const loginData = {
+                email: email,
+                password: password
+            };
+
+            // Send login request to the server
+            fetch('login.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(loginData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Convert the response to JSON
+            })
+            .then(data => {
+                if (data.success) {
+                    // Successful login
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    window.location.href = data.redirect; // Redirect to the appropriate page
+                } else {
+                    // Display the error message from the server
+                    document.getElementById('error-message').textContent = data.message || 'Invalid credentials. Please try again.';
+                }
+            })
+            .catch(error => {
+                console.error('Login error:', error);
+                document.getElementById('error-message').textContent = 'An error occurred. Please try again.';
+            });
+        });
+    </script>
+</body>
+</html>

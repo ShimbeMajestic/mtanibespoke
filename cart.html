@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="cart.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .header .logo {
+            max-width: 150px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .cart-header {
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .cart-header h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .cart-table th,
+        .cart-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-table th {
+            background: #2c3e50;
+            color: #fff;
+        }
+
+        .cart-table img {
+            max-width: 100px;
+            border-radius: 8px;
+        }
+
+        .remove-button {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .remove-button:hover {
+            background: #c0392b;
+        }
+
+        .cart-total {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+
+        .cart-total h2 {
+            margin: 0;
+            color: #2c3e50;
+        }
+
+        .checkout-button {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .checkout-button:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+
+        .checkout-button:hover:enabled {
+            background: #c0392b;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <img src="/Projects/Images/logo.jpg" alt="Mtani Logo" class="logo">
+        </div>
+    </header>
+
+    <section class="cart">
+        <div class="container">
+            <div class="cart-header">
+                <h1>Your Cart</h1>
+            </div>
+
+            <table class="cart-table" id="cart-items">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Cart items will be dynamically inserted here -->
+                </tbody>
+            </table>
+
+            <div class="cart-total">
+                <h2>Total Cost: $<span id="total-cost">0.00</span></h2>
+            </div>
+
+            <div class="checkout-button-container">
+                <a href="checkout.html" class="checkout-button" id="checkout-button" disabled>Proceed to Checkout</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Fetch cart items from get-cart-data.php
+        function fetchCartItems() {
+            fetch('get-cart-data.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        populateCart(data);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Populate the cart table with data
+        function populateCart(cartItems) {
+            const cartTableBody = document.querySelector('#cart-items tbody');
+            const totalCostElement = document.getElementById('total-cost');
+            const checkoutButton = document.getElementById('checkout-button');
+            cartTableBody.innerHTML = ''; // Clear previous data
+            let totalCost = 0;
+
+            if (cartItems.length === 0) {
+                checkoutButton.disabled = true;
+            } else {
+                checkoutButton.disabled = false;
+            }
+
+            cartItems.forEach(item => {
+                const row = document.createElement('tr');
+                
+                // Calculate total price for each product
+                const totalPrice = item.product_price * item.product_quantity;
+                totalCost += totalPrice;
+
+                row.innerHTML = `
+                    <td><img src="${item.product_image}" alt="${item.product_name}"></td>
+                    <td>${item.product_name}</td>
+                    <td>${item.product_description}</td>
+                    <td>$${item.product_price.toFixed(2)}</td>
+                    <td>${item.product_quantity}</td>
+                    <td>$${totalPrice.toFixed(2)}</td>
+                    <td><button class="remove-button" onclick="removeCartItem(${item.id})">Remove</button></td>
+                `;
+
+                cartTableBody.appendChild(row);
+            });
+
+            // Update total cost
+            totalCostElement.innerText = totalCost.toFixed(2);
+        }
+
+        // Remove an item from the cart
+        function removeCartItem(id) {
+            fetch('remove-cart-item.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: id })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Item removed from cart!');
+                    fetchCartItems(); // Refresh cart items after removal
+                } else {
+                    alert('Failed to remove item. Please try again.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Load cart items on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchCartItems();
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mtani Shop</title>
+    <link rel="stylesheet" href="shop.css">
+    <style>
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6f61;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #de6262;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header Section -->
+<header class="header">
+    <div class="container">
+        <img src="/Projects/Images/logo.jpg" alt="Mtani Logo" class="logo">
+        <nav class="navigation">
+            <ul>
+                <li><a href="/Projects/Mtani.html">Home</a></li>
+                <li><a href="/Projects/product.html">Products</a></li>
+                <li><a href="/Projects/about-us.html">About Us</a></li>
+                <li><a href="/Projects/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Image Section -->
+<section class="image-section">
+    <img src="/Projects/Images/pic20.png" alt="Image" class="image">
+</section>
+
+<!-- Product Listings Section -->
+<section class="product-listings">
+    <div class="container">
+        <h2>Shop Our Latest Collection</h2>
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-item">
+                <img src="/Projects/Images/pic16.png" alt="Product 1">
+                <h3>Product 1</h3>
+                <p>Coming together is a beginning, keeping together is progress, working together is success...</p>
+                <span>$99.99</span>
+                <button class="button" onclick="addToCartAndRedirect({id: 1, name: 'Product 1', price: 99.99, image: '/Projects/Images/pic16.png', description: 'Coming together is a beginning, keeping together is progress, working together is success...'});">Add to Cart</button>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-item">
+                <img src="/Projects/Images/pic18.png" alt="Product 2">
+                <h3>Product 2</h3>
+                <p>Mr bruno wearing a black peak lapel suit for his wedding, from our luxury bespoke line.</p>
+                <span>$149.99</span>
+                <button class="button" onclick="addToCartAndRedirect({id: 2, name: 'Product 2', price: 149.99, image: '/Projects/Images/pic18.png', description: 'Mr bruno wearing a black peak lapel suit for his wedding, from our luxury bespoke line.'});">Add to Cart</button>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-item">
+                <img src="/Projects/Images/pic19.png" alt="Product 3">
+                <h3>Product 3</h3>
+                <p>Mr EDWARD wearing a black velvet tux mixed with black shiny silk on the lapels for his wedding.</p>
+                <span>$109.99</span>
+                <button class="button" onclick="addToCartAndRedirect({id: 3, name: 'Product 3', price: 109.99, image: '/Projects/Images/pic19.png', description: 'Mr EDWARD wearing a black velvet tux mixed with black shiny silk on the lapels for his wedding.'});">Add to Cart</button>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-item">
+                <img src="/Projects/Images/pic6.jpg" alt="Product 4">
+                <h3>Product 4</h3>
+                <p>Personal style is a visual business card...</p>
+                <span>$125.89</span>
+                <button class="button" onclick="addToCartAndRedirect({id: 4, name: 'Product 4', price: 125.89, image: '/Projects/Images/pic6.jpg', description: 'Personal style is a visual business card...'});">Add to Cart</button>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-item">
+                <img src="/Projects/Images/pic7.jpg" alt="Product 5">
+                <h3>Product 5</h3>
+                <p>Stylish.</p>
+                <span>$150.00</span>
+                <button class="button" onclick="addToCartAndRedirect({id: 5, name: 'Product 5', price: 150.00, image: '/Projects/Images/pic7.jpg', description: 'Stylish.'});">Add to Cart</button>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-item">
+                <img src="/Projects/Images/pic10.jpg" alt="Product 6">
+                <h3>Product 6</h3>
+                <p>Charcoal grey Safari suit (Kaunda).</p>
+                <span>$87.99</span>
+                <button class="button" onclick="addToCartAndRedirect({id: 6, name: 'Product 6', price: 87.99, image: '/Projects/Images/pic10.jpg', description: 'Charcoal grey Safari suit (Kaunda).'});">Add to Cart</button>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="product-item">
+                <img src="/Projects/Images/pic13.jpg" alt="Product 7">
+                <h3>Product 7</h3>
+                <p>To all events, be weddings or special occasions, our suits are the best.</p>
+                <span>$77.99</span>
+                <button class="button" onclick="addToCartAndRedirect({id: 7, name: 'Product 7', price: 77.99, image: '/Projects/Images/pic13.jpg', description: 'To all events, be weddings or special occasions, our suits are the best.'});">Add to Cart</button>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="product-item">
+                <img src="/Projects/Images/pic5.jpg" alt="Product 8">
+                <h3>Product 8</h3>
+                <p>Pinstripes business suit, peak lapel grey with a white cotton shirt “pinned collar”.</p>
+                <span>$97.99</span>
+                <button class="button" onclick="addToCartAndRedirect({id: 8, name: 'Product 8', price: 97.99, image: '/Projects/Images/pic5.jpg', description: 'Pinstripes business suit, peak lapel grey with a white cotton shirt “pinned collar”.'});">Add to Cart</button>
+            </div>
+
+            <!-- Product 9 -->
+            <div class="product-item">
+                <img src="/Projects/Images/pic21.png" alt="Product 9">
+                <h3>Product 9</h3>
+                <p>“Black tux oxford” just came to wish me a happy birthday...</p>
+                <span>$120.99</span>
+                <button class="button" onclick="addToCartAndRedirect({id: 9, name: 'Product 9', price: 120.99, image: '/Projects/Images/pic21.png', description: '“Black tux oxford” just came to wish me a happy birthday...'});">Add to Cart</button>
+            </div>
+
+            <!-- Product 10 -->
+            <div class="product-item">
+                <img src="/Projects/Images/pic22.png" alt="Product 10">
+                <h3>Product 10</h3>
+                <p>Luxury tailored suit, modern fit, exceptional quality...</p>
+                <span>$220.99</span>
+                <button class="button" onclick="addToCartAndRedirect({id: 10, name: 'Product 10', price: 220.99, image: '/Projects/Images/pic22.png', description: 'Luxury tailored suit, modern fit, exceptional quality...'});">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 Mtani. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    function addToCartAndRedirect(product) {
+        // Check if the user is logged in
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn'); // Adjust based on your session management
+
+        if (!isLoggedIn) {
+            // Redirect to login page
+            window.location.href = 'login.html';
+        } else {
+            // Redirect to product-details.html with product data
+            const queryString = `?id=${product.id}&name=${encodeURIComponent(product.name)}&price=${product.price}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.description)}`;
+            window.location.href = 'product-details.html' + queryString;
+        }
+    }
+</script>
+</body>
+</html>
